@@ -1,0 +1,51 @@
+package com.board.controller;
+
+import com.board.controller.action.*;
+
+
+/*
+ * 프레임워크에서 싱글톤을 자주 사용
+ * 싱글톤은 한 개의 객체만 생성하고 이를 getInstance() 로 호출하여 사용.
+ * 
+ * BoardServlet은 서블릿으로 요청이 들어오면 post방식으로 요청이 되더라도 doGet() 메소드를 호춣하도록 구현하였음.
+ * 
+ * doGet() 메소드를 호출하면 getAction() 메소드에서는 command 를 받아 거기에 맞는 액션을 리턴
+ *
+ */
+ 
+public class ActionFactory {
+	private ActionFactory() {
+		
+	}
+	
+	private static ActionFactory instance = new ActionFactory();
+	
+	public static ActionFactory getInstance() {
+		return instance;
+	}
+	
+	public Action getAction(String command) {
+		Action action = null;
+		
+		if(command.equals("board_list")) {
+			action = new BoardListAction();
+		} else if(command.equals("board_write_form")) {
+			action = new BoardWriteFormAction();
+		} else if(command.equals("board_write")) {
+			action = new BoardWriteAction();
+		} else if(command.equals("board_view")) {
+			action = new BoardViewAction();
+		} else if(command.equals("board_check_pass_form")) {
+			action = new BoardCheckPassFormAction();
+		} else if(command.equals("board_check_pass")) {
+			action = new BoardCheckPassAction();
+		} else if(command.equals("board_update_form")) {
+			action = new BoardUpdateFormAction();
+		} else if(command.equals("board_update")) {
+			action = new BoardUpdateAction();
+		} else if(command.equals("board_delete")) {
+			action = new BoardDeleteAction();
+		}
+		return action;
+	}
+}
